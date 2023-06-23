@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Infrared camera detector</title>
+    <style>
+         body {
+            zoom: 300%;
+        }
+        
+        #videoElement {
+            border: 1px solid black;
+            margin: 10px;
+            position: relative;
+            //filter: grayscale(1);
+            //filter: blur(3px);
+            //filter: saturate(5);
+        }
+
+        #videoOverlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 300%;
+            height: 300%;
+            background-color: rgba(0, 255, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <video id="videoElement" autoplay></video>
+    <div id="videoOverlay"></div>
+
+    <script>
+        // Get video element
+        const video = document.getElementById('videoElement');
+
+        // Get user media (camera) and display it in the video element
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+            .then(stream => {
+                video.srcObject = stream;
+            })
+            .catch(error => {
+                console.error('Error accessing the camera:', error);
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Location Selector</title>
+ <style>
+    body {
+      background-color: black;
+      color: white;
+    }
+
+    input[type="text"], select, label, div {
+      font-size: 27px; /* Increased font size by 50% */
+      padding: 9px; /* Increased padding by 50% */
+      text-align: center; /* Center align the text fields */
+      margin: 0 auto; /* Center align the text fields */
+      display: block; /* Display the text fields as blocks */
+    }
+
+    input[type="submit"] {
+      font-size: 27px; /* Increased font size by 50% */
+      padding: 12px 18px; /* Increased padding by 50% */
+      display: block; /* Display the submit button as a block */
+      margin: 0 auto; /* Center align the submit button */
+    }
+  </style>
+</head>
+<body>
+  <label for="fromLocation">From:</label>
+    <br/><br/><br/>
+
+  <input type="text" id="fromLocation" list="locationList">
+  <br/><br/><br/>
+
+
+  <label for="toLocation">To:</label>
+      <br/><br/><br/>
+
+  <input type="text" id="toLocation" list="locationList">
+
+  <br/><br/><br/>
+
+  <datalist id="locationList">
+    <option value="Aluva Station">
+    <option value="Pulinchodu Station">
+    <option value="Companypady Station">
+    <option value="Ambattukavu Station">
+    <option value="Muttom Station">
+    <option value="Kalamassery Station">
+    <option value="CUSAT Station">
+    <option value="Pathadipalam Station">
+    <option value="Edapally Station">
+    <option value="Changampuzha Park Station">
+    <option value="Palarivattom Station">
+    <option value="JLN Stadium Station">
+    <option value="Kaloor Station">
+    <option value="Lissie Station">
+    <option value="MG Road Station">
+    <option value="Maharaja's College Station">
+    <option value="Ernakulam South Station">
+    <option value="Kadavanthra Station">
+    <option value="Elamkulam Station">
+    <option value="Vytila Station">
+    <option value="Thaikoodam Station">
+    <option value="Petta Station">
+    <option value="Vadakkekkotta Station">
+    <option value="SN Junction Station">
+  </datalist>
+
+  <div id="result">Select your From and To Metro stations to view your route map</div>
+
+  <script>
+    function getInputValue(id) {
+      return document.getElementById(id).value;
+    }
+
+    function displayResult(result) {
+      document.getElementById("result").innerHTML = result;
+    }
+
+    function calculateInBetweenLocations() {
+      var from = getInputValue("fromLocation");
+      var to = getInputValue("toLocation");
+
+      if (from && to) {
+        var locations = [
+          'Aluva Station',
+          'Pulinchodu Station',
+          'Companypady Station',
+          'Ambattukavu Station',
+          'Muttom Station',
+          'Kalamassery Station',
+          'CUSAT Station',
+          'Pathadipalam Station',
+          'Edapally Station',
+          'Changampuzha Park Station',
+          'Palarivattom Station',
+          'JLN Stadium Station',
+          'Kaloor Station',
+          'Lissie Station',
+          'MG Road Station',
+          "Maharaja's College Station",
+          'Ernakulam South Station',
+          'Kadavanthra Station',
+          'Elamkulam Station',
+          'Vytila Station',
+          'Thaikoodam Station',
+          'Petta Station',
+          'Vadakkekkotta Station',
+          'SN Junction Station'
+        ];
+
+        var fromIndex = locations.indexOf(from);
+        var toIndex = locations.indexOf(to);
+
+        if (fromIndex !== -1 && toIndex !== -1) {
+          var inBetweenLocations = [];
+
+          if (fromIndex < toIndex) {
+            inBetweenLocations = locations.slice(fromIndex + 1, toIndex);
+          } else if (fromIndex > toIndex) {
+            inBetweenLocations = locations.slice(toIndex + 1, fromIndex).reverse();
+          }
+
+          if (inBetweenLocations.length > 0) {
+            var resultHTML = "";
+            inBetweenLocations.forEach(function(location) {
+              resultHTML += "<p>" + location + "</p>";
+            });
+            displayResult(resultHTML);
+          } else {
+            displayResult("No in-between locations.");
+          }
+        } else {
+          displayResult("Invalid locations.");
+        }
+      } else {
+        displayResult("");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      var fromLocationInput = document.getElementById("fromLocation");
+      var toLocationInput = document.getElementById("toLocation");
+
+      fromLocationInput.addEventListener("input", calculateInBetweenLocations);
+      toLocationInput.addEventListener("input", calculateInBetweenLocations);
+    });
+  </script>
+</body>
+</html>

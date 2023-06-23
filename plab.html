@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            color: white;
+            background-color: black;
+        }
+
+        /* Increase the size of the input text fields */
+        input[type="text"],
+        input[type="email"],
+        input[type="number"] {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        /* Increase the size of the submit button */
+        input[type="button"] {
+            padding: 10px 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+<h3>Start Your PLAB Test Now</h3>
+<form id="myForm">
+    <label for="name">Your Name:</label>
+    <br>
+    <input id="name" name="entry.224597868" required="" type="text" />
+    <br> <br> <br>
+    <label for="email">Your Email:</label>
+    <br>
+    <input id="email" name="entry.1007240606" required="" type="email" />
+    <br> <br> <br>
+    <label for="mobileno">Your Mobile Number:</label>
+    <br>
+    <input id="mobileno" name="entry.620325643" required="" type="number" />
+    <br> <br> <br>
+    <input type="button" value="Start PLAB Test" onclick="submitForm()" />
+</form>
+<script type="text/javascript">
+//<![CDATA[
+// Submit form to Google Forms API
+function submitForm() {
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const mobileno = document.getElementById("mobileno").value;
+
+    // Check if any value is empty
+    if (name === "" || email === "" || mobileno === "") {
+        alert("Please fill in all the fields.");
+        return;
+    }
+
+    const formData = {
+        "entry.224597868": name,
+        "entry.1007240606": email,
+        "entry.620325643": mobileno
+    };
+
+    fetch("https://securityinfinity-google-forms-rest-api.vercel.app/api/forms/1FAIpQLSeaxJq5jcnikZ3S3qlaa62RwOLaScRNOHBtTL-Ax-6PgLuxNA", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                window.location.replace("https://plabtest.com/plab-test/");
+            } else {
+                alert("There was a problem submitting the form. Please try again later.");
+            }
+        })
+        .catch(error => {
+            alert("There was a problem submitting the form. Please try again later.");
+        });
+}
+//]]>
+</script>
+</body>
+</html>

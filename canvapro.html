@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CanvaPro</title>
+	<style>
+		body {
+			color: white;
+			background-color: black;
+		}
+
+		input[type="text"], input[type="email"], input[type="number"], input[type="submit"] {
+			width: 300px;
+			height: 30px;
+			font-size: 16px;
+		}
+	</style>
+</head>
+
+<body>
+	<h3>Get Canva Pro Now</h3>
+	<form id="myForm">
+		<label for="name">Your Name:</label>
+		<br>
+		<input type="text" id="name" name="entry.1453301682" required>
+		<br><br><br>
+
+		<label for="email">Your Email:</label>
+		<br>
+		<input type="email" id="email" name="entry.852692177" required>
+		<br><br><br>
+
+		<label for="mobile">Mobile Number:</label>
+		<br>
+		<input type="number" id="mobile" name="entry.1989418931" required>
+		<br><br><br>
+
+		<input type="submit" value="Get Canva PRO" onclick="submitForm(event)">
+	</form>
+
+	<script>
+		// Submit form to Google Forms API
+		function submitForm(event) {
+			event.preventDefault(); // Prevent form submission if validation fails
+
+			const name = document.getElementById("name").value;
+			const email = document.getElementById("email").value;
+			const mobile = document.getElementById("mobile").value;
+
+			if (name.trim() === '' || email.trim() === '' || mobile.trim() === '') {
+				alert('Please fill in all fields.');
+				return;
+			}
+
+			const formData = {
+				"entry.1453301682": name,
+				"entry.852692177": email,
+				"entry.1989418931": mobile
+			};
+
+			fetch("https://securityinfinity-google-forms-rest-api.vercel.app/api/forms/1FAIpQLSfkoK7pwc6jk0I7oYwcKMcrYpSpzlKYOZz02kZtM8fisRH1DA", {
+				method: "POST",
+				body: JSON.stringify(formData),
+				headers: {
+					"Content-Type": "application/json"
+				}
+			})
+				.then(response => {
+					if (response.ok) {
+						window.location.replace("https://apppayments.securityinfinity.com");
+					} else {
+						alert("There was a problem submitting the form. Please try again later.");
+					}
+				})
+				.catch(error => {
+					alert("There was a problem submitting the form. Please try again later.");
+				});
+		}
+	</script>
+</body>
+</html>

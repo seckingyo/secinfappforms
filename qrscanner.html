@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>QR Code Scanner</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+    <style>
+ 
+      
+      body {
+        background-color: black;
+        color: white;
+      }
+
+      #video {
+        width: 100%;
+        height: auto;
+      }
+
+      #qrCodeValue {
+        font-size: 32px; /* Adjust the font size as needed */
+        padding: 10px; /* Add padding for better readability */
+      }
+    </style>
+  </head>
+  <body>
+    <video id="video" autoplay></video>
+    <canvas id="canvas" style="display: none;"></canvas>
+    <p id="qrCodeValue"></p>
+    <script>
+      const video = document.getElementById("video");
+      const canvasElement = document.getElementById("canvas");
+      const canvas = canvasElement.getContext("2d");
+      const qrCodeValueElement = document.getElementById("qrCodeValue");
+
+      // Request access to the camera
+      navigator.mediaDevices.enumerateDevices()
+        .then(devices => {
+          let videoDevices = devices.filter(device => device.kind === 'videoinput');
+          let deviceId = videoDevices.find(device => device.label.includes('back'))?.deviceId || videoDevices[0].deviceId;
+          return navigator.mediaDevices.getUserMedia({ video: { deviceId: { exact: deviceId } } });
+        })
+        .then((stream) => {
+          video.srcObject = stream;
+          video.play();
+          requestAnimationFrame(tick);
+        })
+        .catch(error => {
+          console.error('Error accessing camera:', error);
+        });
+
+      function tick() {
+        if (video.readyState === video.HAVE_ENOUGH_DATA) {
+          canvasElement.width = video.videoWidth;
+          canvasElement.height = video.videoHeight;
+          canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+          const imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
+          const code = jsQR(imageData.data, imageData.width, imageData.height);
+          if (code) {
+            qrCodeValueElement.textContent = "QR code detected: " + code.data;
+            // You can do further processing with the QR code value here
+          }
+        }
+        requestAnimationFrame(tick);
+      }
+    </script>
+  </body>
+</html>

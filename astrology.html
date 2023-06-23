@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Domain AI Powered Search</title>
+    <style>
+        body {
+            color: white;
+            background-color: black;
+        }
+
+        input[type="text"], input[type="email"], input[type="submit"] {
+            width: 300px;
+            height: 30px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+<h3>Check Your Astrology</h3>
+<form id="myForm">
+    <label for="name">Your Name:</label>
+    <br>
+    <input type="text" id="name" name="entry.1556280638" required>
+    <br><br><br>
+
+    <label for="dob">Date of Birth:</label>
+    <br>
+    <input type="text" id="dob" name="entry.192250954" required>
+    <br><br><br>
+
+    <label for="email">Your Email:</label>
+    <br>
+    <input type="email" id="email" name="entry.302591477" required>
+    <br><br><br>
+
+    <label for="mobile">Mobile Number:</label>
+    <br>
+    <input type="text" id="mobile" name="entry.607720210" required>
+    <br><br><br>
+
+    <input type="submit" value="Check Your Astrology" onclick="submitForm(event)">
+</form>
+
+<script>
+    // Submit form to Google Forms API
+    function submitForm(event) {
+        event.preventDefault(); // Prevent form submission if validation fails
+
+        const name = document.getElementById("name").value;
+        const dob = document.getElementById("dob").value;
+        const email = document.getElementById("email").value;
+        const mobile = document.getElementById("mobile").value;
+
+        if (name.trim() === '' || dob.trim() === '' || email.trim() === '' || mobile.trim() === '') {
+            alert('Please fill in all fields.');
+            return;
+        }
+
+        const formData = {
+            "entry.1556280638": name,
+            "entry.192250954": dob,
+            "entry.302591477": email,
+            "entry.607720210": mobile
+        };
+
+        fetch("https://securityinfinity-google-forms-rest-api.vercel.app/api/forms/1FAIpQLSdnwVK-ww4SgPK7148O3ROOjQBG_9n-SMqwvp_aMADTnYe_xQ", {
+            method: "POST",
+            body: JSON.stringify(formData),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    window.location.replace("https://35146mo7viuobm4noa97nnvm3m.hop.clickbank.net");
+                } else {
+                    alert("There was a problem submitting the form. Please try again later.");
+                }
+            })
+            .catch(error => {
+                alert("There was a problem submitting the form. Please try again later.");
+            });
+    }
+</script>
+</body>
+</html>

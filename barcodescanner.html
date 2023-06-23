@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Barcode Scanner</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/@ericblade/quagga2"></script>
+    <style>
+ 
+
+      body {
+        background-color: black;
+        color: white;
+        font-family: Arial, sans-serif;
+      }
+
+      #interactive.viewport {
+        position: relative;
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+        text-align: center;
+      }
+
+      #barcodeOutput {
+        padding: 10px;
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="interactive" class="viewport"></div>
+    <script>
+      $(document).ready(function() {
+        if (navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === 'function') {
+          Quagga.init({
+            inputStream: {
+              name: "Live",
+              type: "LiveStream",
+              target: document.querySelector("#interactive"),
+              constraints: {
+                facingMode: "environment" // or "user" for front camera
+              }
+            },
+            decoder: {
+              readers: ["ean_reader"] // specify the barcode types to scan
+            }
+          }, function(err) {
+            if (err) {
+              console.error("Quagga initialization failed:", err);
+              return;
+            }
+            Quagga.start();
+          });
+
+          Quagga.onDetected(function(result) {
+            var barcodeOutput = document.getElementById("barcodeOutput");
+            barcodeOutput.textContent = "Barcode detected and decoded: " + result.codeResult.code;
+            // Handle the barcode result here
+          });
+        } else {
+          console.error("MediaDevices.getUserMedia not supported");
+        }
+      });
+    </script>
+    <div id="barcodeOutput"></div>
+  </body>
+</html>

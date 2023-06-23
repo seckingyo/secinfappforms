@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Domain AI Powered Search</title>
+    <style>
+        body {
+            color: white;
+            background-color: black;
+        }
+
+        /* Increase the size of the input text fields */
+        input[type="text"],
+        input[type="email"] {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        /* Increase the size of the submit button */
+        input[type="button"] {
+            padding: 10px 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<h3>Get Cloud Hosting</h3>
+<form id="myForm">
+    <label for="name">Your Name:</label>
+    <br>
+    <input type="text" id="name" name="entry.1412420985" required>
+    <br> <br> <br>
+
+    <label for="email">Your Email:</label>
+    <br>
+    <input type="email" id="email" name="entry.446563708" required>
+    <br> <br> <br>
+
+    <input type="button" value="Get Cloud Hosting" onclick="submitForm()">
+</form>
+
+<script>
+    // Submit form to Google Forms API
+    function submitForm() {
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+
+        // Check if any value is empty
+        if (name === "" || email === "") {
+            alert("Please fill in all the fields.");
+            return;
+        }
+
+        const formData = {
+            "entry.1412420985": name,
+            "entry.446563708": email
+        };
+
+        fetch("https://securityinfinity-google-forms-rest-api.vercel.app/api/forms/1FAIpQLSdQgZKV99yMPa_S6mi3WlnbbGpkz4x88kc3Lukja6k6Ujo3vw", {
+            method: "POST",
+            body: JSON.stringify(formData),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    window.location.replace("https://cloudhosting.securityinfinity.com");
+                } else {
+                    alert("There was a problem submitting the form. Please try again later.");
+                }
+            })
+            .catch(error => {
+                alert("There was a problem submitting the form. Please try again later.");
+            });
+    }
+</script>
+</body>
+</html>
